@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>One tiny question 💘</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root{
+      --pink:#ff3b7a;
+      --pink2:#ff6ea6;
+      --bg1:#fff0f6;
+      --bg2:#ffffff;
+      --text:#1f1f1f;
+      --card: rgba(255,255,255,0.85);
+      --shadow: 0 22px 70px rgba(0,0,0,0.10);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(255,59,122,0.10), transparent 45%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(255,110,166,0.12), transparent 40%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--text);
+      padding:22px;
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(640px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .sparkle{
+      position:absolute;
+      inset:-40px;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,59,122,0.16), transparent 34%),
+        radial-gradient(circle at 78% 28%, rgba(255,110,166,0.22), transparent 38%),
+        radial-gradient(circle at 50% 90%, rgba(255,59,122,0.10), transparent 45%);
+      filter: blur(0.2px);
+    }
+
+    h1{
+      margin: 8px 0 10px;
+      font-size: 28px;
+      letter-spacing: -0.3px;
+    }
+    p{
+      margin: 0 auto 16px;
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 520px;
+      opacity: 0.92;
+    }
+
+    .buttons{
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 18px;
+    }
+    button{
+      border:0;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 16px;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+      user-select:none;
+      position:relative;
+    }
+    button:active{ transform: scale(0.98); }
+
+    #yesBtn{
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      color: white;
+      box-shadow: 0 14px 30px rgba(255,59,122,0.24);
+    }
+    #yesBtn:hover{ transform: scale(1.04); }
+
+    /* The "NO" button that morphs into YES */
+    #noBtn{
+      background: #fff;
+      color:#333;
+      border: 1px solid rgba(0,0,0,0.10);
+      overflow:hidden;
+      min-width: 170px;
+    }
+    #noBtn:hover{ transform: scale(1.02); }
+
+    .no-inner{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      position:relative;
+      height: 22px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    .chip{
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,59,122,0.10);
+      border: 1px solid rgba(255,59,122,0.18);
+      color: rgba(177,0,46,0.95);
+      font-weight: 600;
+    }
+
+    /* Visible countdown bar to make it obvious */
+    .bar-wrap{
+      margin: 16px auto 0;
+      width:min(420px, 100%);
+      height: 10px;
+      background: rgba(0,0,0,0.06);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      border-radius:999px;
+      transition: width 0.2s linear;
+    }
+
+    .hint{
+      margin-top: 10px;
+      font-size: 13px;
+      opacity: 0.70;
+    }
+
+    .status{
+      margin-top: 16px;
+      min-height: 24px;
+      font-size: 15px;
+      opacity: 0.92;
+    }
+
+    .hidden{ display:none; }
+
+    /* ---------- Heart + Arrow Animation (CSS “3D-ish”) ---------- */
+    .stage{
+      margin-top: 14px;
+      display:none;
+      padding: 18px 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,59,122,0.06);
+      border: 1px dashed rgba(255,59,122,0.35);
+    }
+
+    .scene{
+      height: 220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective: 900px;
+      margin: 10px 0 6px;
+    }
+
+    .heart-wrap{
+      position:relative;
+      width: 160px;
+      height: 140px;
+      transform-style: preserve-3d;
+      animation: heartFloat 2.2s ease-in-out infinite;
+    }
+
+    /* Heart body (2 lobes + point) */
+    .heart{
+      position:absolute;
+      inset:0;
+      transform: rotateX(18deg) rotateY(-18deg);
+      transform-style: preserve-3d;
+      filter: drop-shadow(0 20px 22px rgba(255,59,122,0.18));
+    }
+    .lobe{
+      position:absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--pink2), var(--pink));
+      top: 0;
+    }
+    .lobe.left{ left: 20px; }
+    .lobe.right{ left: 70px; }
+    .point{
+      position:absolute;
+      width: 0; height:0;
+      left: 45px;
+      top: 48px;
+      border-left: 55px solid transparent;
+      border-right:55px solid transparent;
+      border-top: 78px solid var(--pink);
+      transform: rotate(0deg);
+      filter: brightness(1.02);
+    }
+
+    /* “3D depth” layers */
+    .depth{
+      position:absolute;
+      inset:0;
+      transform: translateZ(-14px);
+      opacity: 0.55;
+      filter: blur(0.3px);
+    }
+    .depth .lobe, .depth .point{
+      background: linear-gradient(145deg, rgba(255,59,122,0.65), rgba(255,110,166,0.55));
+    }
+
+    /* Arrow */
+    .arrow{
+      position:absolute;
+      left: -160px;
+      top: 66px;
+      width: 260px;
+      height: 10px;
+      background: linear-gradient(90deg, rgba(40,40,40,0.2), rgba(40,40,40,0.9));
+      border-radius: 999px;
+      transform: translateZ(30px) rotateZ(-8deg);
+      opacity:0;
+      animation: arrowShoot 1.2s cubic-bezier(.2,.9,.2,1) forwards;
+    }
+    .arrow::after{
+      content:"";
+      position:absolute;
+      right:-10px;
+      top: -8px;
+      width: 0; height:0;
+      border-left: 16px solid rgba(40,40,40,0.9);
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+    }
+    .arrow::before{
+      content:"";
+      position:absolute;
+      left:-10px;
+      top: -5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(40,40,40,0.35);
+      filter: blur(0.2px);
+    }
+
+    /* Spark particles */
+    .burst{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:0;
+      animation: burst 0.9s ease forwards;
+    }
+    .dot{
+      position:absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,59,122,0.9);
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 0 rgba(255,59,122,0.0);
+    }
+    .dot:nth-child(1){ transform: translate(-50%,-50%) translate(60px,-35px); }
+    .dot:nth-child(2){ transform: translate(-50%,-50%) translate(-70px,-20px); background: rgba(255,110,166,0.9); }
+    .dot:nth-child(3){ transform: translate(-50%,-50%) translate(10px,-75px); }
+    .dot:nth-child(4){ transform: translate(-50%,-50%) translate(-10px,70px); background: rgba(255,110,166,0.9); }
+    .dot:nth-child(5){ transform: translate(-50%,-50%) translate(80px,30px); }
+
+    @keyframes arrowShoot{
+      0%{ transform: translateX(0) translateZ(30px) rotateZ(-8deg); opacity:0; }
+      10%{ opacity:1; }
+      100%{ transform: translateX(220px) translateZ(30px) rotateZ(-8deg); opacity:1; }
+    }
+
+    @keyframes burst{
+      0%{ opacity:0; transform: scale(0.6); }
+      20%{ opacity:1; }
+      100%{ opacity:0; transform: scale(1.25); }
+    }
+
+    @keyframes heartFloat{
+      0%,100%{ transform: translateY(0) rotateZ(0deg); }
+      50%{ transform: translateY(-6px) rotateZ(0.7deg); }
+    }
+
+    /* Morph effect for NO→YES (obvious) */
+    .morphing{
+      animation: wobble 0.5s ease-in-out infinite alternate;
+    }
+    @keyframes wobble{
+      from{ transform: rotate(-1.2deg) scale(1); }
+      to{ transform: rotate(1.2deg) scale(1.02); }
+    }
+
+    .glitch{
+      position:relative;
+      display:inline-block;
+    }
+    .glitch::before, .glitch::after{
+      content: attr(data-text);
+      position:absolute;
+      left:0;
+      top:0;
+      opacity:0.55;
+      clip-path: inset(0 0 50% 0);
+      transform: translate(1px, -1px);
+      color: rgba(255,59,122,0.65);
+      pointer-events:none;
+    }
+    .glitch::after{
+      clip-path: inset(50% 0 0 0);
+      transform: translate(-1px, 1px);
+      color: rgba(255,110,166,0.65);
+    }
+
+    .success-title{
+      font-size: 20px;
+      margin: 8px 0 6px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="sparkle"></div>
+
+    <h1>Will you be my Valentine? 💘</h1>
+    <p>
+      There are two options. One of them is… <span style="font-weight:600;">emotionally unstable</span>.
+    </p>
+
+    <div class="buttons" id="btnRow">
+      <button id="yesBtn">Yes 💗</button>
+
+      <button id="noBtn" aria-label="No button">
+        <span class="no-inner">
+          <span class="glitch" id="noText" data-text="No 😤">No 😤</span>
+          <span class="chip" id="timerChip">5s</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="bar-wrap" aria-hidden="true">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="hint" id="hint">Watch the “No” for 5 seconds 👀</div>
+    <div class="status" id="status"></div>
+
+    <div class="stage" id="stage">
+      <div class="success-title" id="successTitle">YAY 💖</div>
+      <div style="opacity:.92; line-height:1.5;">
+        You just made my whole day.  
+        Now you owe me a hug. 😌
+      </div>
+
+      <div class="scene">
+        <div class="heart-wrap" id="heartWrap">
+          <div class="heart">
+            <div class="depth">
+              <div class="lobe left"></div>
+              <div class="lobe right"></div>
+              <div class="point"></div>
+            </div>
+            <div class="lobe left"></div>
+            <div class="lobe right"></div>
+            <div class="point"></div>
+          </div>
+
+          <div class="arrow" id="arrow"></div>
+
+          <div class="burst" id="burst">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">(Screenshot this, I’ll pretend I’m cool about it.)</div>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const noText = document.getElementById("noText");
+    const timerChip = document.getElementById("timerChip");
+    const bar = document.getElementById("bar");
+    const statusEl = document.getElementById("status");
+    const hint = document.getElementById("hint");
+
+    const stage = document.getElementById("stage");
+    const arrow = document.getElementById("arrow");
+    const burst = document.getElementById("burst");
+    const successTitle = document.getElementById("successTitle");
+
+    let clicked = false;
+
+    // ---- NO -> YES morph over 5 seconds ----
+    const totalMs = 5000;
+    const start = Date.now();
+
+    // Make it obvious it's changing
+    noBtn.classList.add("morphing");
+
+    const tick = () => {
+      if (clicked) return;
+
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, totalMs - elapsed);
+      const secs = Math.ceil(remaining / 1000);
+
+      timerChip.textContent = `${secs}s`;
+      const pct = Math.min(100, (elapsed / totalMs) * 100);
+      bar.style.width = `${pct}%`;
+
+      // Progressive text shift (obvious)
+      if (elapsed < 1500) {
+        noText.textContent = "No 😤";
+        noText.dataset.text = "No 😤";
+        statusEl.textContent = "Okay… fair. But just watch it for a sec 😌";
+      } else if (elapsed < 3000) {
+        noText.textContent = "N… maybe? 😳";
+        noText.dataset.text = "N… maybe? 😳";
+        statusEl.textContent = "It’s thinking…";
+      } else if (elapsed < 4300) {
+        noText.textContent = "Wait… YES? 👀";
+        noText.dataset.text = "Wait… YES? 👀";
+        statusEl.textContent = "It’s changing its mind.";
+      } else if (elapsed < totalMs) {
+        noText.textContent = "Y…e…s… 💗";
+        noText.dataset.text = "Y…e…s… 💗";
+        statusEl.textContent = "Okay it’s basically a Yes now.";
+      } else {
+        // Final: becomes YES
+        noBtn.classList.remove("morphing");
+        noBtn.style.borderColor = "rgba(255,59,122,0.40)";
+        noBtn.style.background = "rgba(255,59,122,0.08)";
+        noBtn.style.color = "#b1002e";
+        noText.textContent = "YES 💗";
+        noText.dataset.text = "YES 💗";
+        timerChip.textContent = "done";
+        statusEl.textContent = "There. The universe fixed it.";
+        hint.textContent = "You can click either one 😌";
+        bar.style.width = "100%";
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    // ---- Click behavior: either button triggers the same outcome ----
+    function triggerCelebration(chosen) {
+      if (clicked) return;
+      clicked = true;
+
+      successTitle.textContent = (chosen === "yesBtn") ? "YAY 💖" : "I KNEW IT 😌💖";
+      stage.style.display = "block";
+      statusEl.textContent = "Correct choice ✅";
+      hint.textContent = "Now scroll a tiny bit if needed 👇";
+
+      // Restart arrow + burst animations cleanly
+      arrow.style.animation = "none";
+      burst.style.animation = "none";
+      void arrow.offsetWidth; // reflow
+      void burst.offsetWidth;
+
+      arrow.style.opacity = "0";
+      arrow.style.animation = "arrowShoot 1.2s cubic-bezier(.2,.9,.2,1) forwards";
+      burst.style.animation = "burst 0.9s ease forwards";
+
+      // Disable buttons after click
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+      yesBtn.style.opacity = "0.92";
+      noBtn.style.opacity = "0.78";
+    }
+
+    yesBtn.addEventListener("click", () => triggerCelebration("yesBtn"));
+    noBtn.addEventListener("click", () => triggerCelebration("noBtn"));
+  </script>
+</body>
+</html>
