@@ -1,189 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>For Shravani 💘</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>For Shravani 💘</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(180deg, #fff1f6, #ffffff);
+  color: #222;
+  padding: 24px;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, #fff1f6, #ffffff);
-      color: #222;
-      padding: 24px;
-    }
+.card {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  border-radius: 26px;
+  padding: 30px 24px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  text-align: center;
+}
 
-    .card {
-      max-width: 720px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.9);
-      border-radius: 28px;
-      padding: 28px 22px 36px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    }
+h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 30px;
-      margin-bottom: 6px;
-    }
+.sub {
+  opacity: 0.85;
+  margin-bottom: 22px;
+}
 
-    .sub {
-      text-align: center;
-      opacity: 0.85;
-      margin-bottom: 22px;
-      font-size: 16px;
-    }
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
+button {
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
 
-    button {
-      padding: 14px 24px;
-      border-radius: 999px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
+#yes {
+  background: linear-gradient(135deg, #ff4f87, #ff7db1);
+  color: white;
+}
 
-    #yesBtn {
-      background: linear-gradient(135deg, #ff4f87, #ff7db1);
-      color: white;
-      box-shadow: 0 12px 26px rgba(255,79,135,0.35);
-    }
+#no {
+  background: white;
+  border: 2px solid #ddd;
+  font-weight: 600;
+  min-width: 160px;
+}
 
-    #yesBtn:hover { transform: scale(1.05); }
+.bar {
+  height: 10px;
+  background: #eee;
+  border-radius: 999px;
+  margin-top: 18px;
+  overflow: hidden;
+}
 
-    #noBtn {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.15);
-      min-width: 170px;
-      font-weight: 600;
-    }
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff4f87, #ff7db1);
+}
 
-    .countdown {
-      margin: 18px auto 6px;
-      text-align: center;
-      font-size: 14px;
-      opacity: 0.75;
-    }
+.status {
+  margin-top: 14px;
+  min-height: 22px;
+}
 
-    .bar {
-      height: 10px;
-      background: rgba(0,0,0,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 10px;
-    }
+.result {
+  display: none;
+  margin-top: 40px;
+  border-top: 1px dashed #ff8fb3;
+  padding-top: 36px;
+}
 
-    .bar-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ff4f87, #ff7db1);
-      transition: width 0.2s linear;
-    }
+svg {
+  width: 220px;
+  margin-top: 18px;
+}
 
-    .status {
-      text-align: center;
-      margin-top: 14px;
-      font-size: 15px;
-      min-height: 22px;
-    }
+.arrow {
+  animation: shoot 1s ease forwards;
+}
 
-    /* RESULT SECTION */
-    .result {
-      margin-top: 40px;
-      padding-top: 40px;
-      border-top: 1px dashed rgba(255,79,135,0.4);
-      display: none;
-      text-align: center;
-    }
-
-    .result h2 {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-
-    .result p {
-      font-size: 16px;
-      opacity: 0.9;
-      margin-bottom: 22px;
-    }
-
-    /* HEART + ARROW SVG */
-    .heart-wrap {
-      display: flex;
-      justify-content: center;
-      margin-top: 12px;
-    }
-
-    svg {
-      width: 220px;
-      overflow: visible;
-    }
-
-    .arrow {
-      animation: shoot 1.2s ease forwards;
-    }
-
-    @keyframes shoot {
-      from { transform: translateX(-140px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-  </style>
+@keyframes shoot {
+  from { transform: translateX(-120px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+</style>
 </head>
+
 <body>
+<div class="card">
+  <h1>Shravani, my love 💘</h1>
+  <div class="sub">
+    I have a small question.<br>
+    One option is emotionally unstable.
+  </div>
 
-  <div class="card">
-    <h1>Shravani, my love 💘</h1>
-    <div class="sub">
-      I have a tiny question for you.<br>
-      One option is… emotionally unstable.
-    </div>
+  <div class="buttons">
+    <button id="yes">Yes 💗</button>
+    <button id="no">No 😤</button>
+  </div>
 
-    <div class="buttons">
-      <button id="yesBtn">Yes 💗</button>
-      <button id="noBtn">No 😤 (for now)</button>
-    </div>
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
 
-    <div class="countdown" id="countdownText">
-      The “No” is having second thoughts…
-    </div>
+  <div class="status" id="status"></div>
 
-    <div class="bar">
-      <div class="bar-fill" id="barFill"></div>
-    </div>
+  <div class="result" id="result">
+    <h2>I knew it 😌💖</h2>
+    <p>
+      You just made my whole day.<br>
+      Now you owe me a hug, my love.
+    </p>
 
-    <div class="status" id="status"></div>
+    <svg viewBox="0 0 300 200">
+      <path d="M150 180
+               C 20 90, 70 10, 150 60
+               C 230 10, 280 90, 150 180"
+            fill="#ff5c8a"/>
+      <g class="arrow">
+        <line x1="10" y1="120" x2="190" y2="90"
+              stroke="#333" stroke-width="6"/>
+        <polygon points="190,90 175,82 178,98" fill="#333"/>
+      </g>
+    </svg>
+  </div>
+</div>
 
-    <div class="result" id="result">
-      <h2>I knew it 😌💖</h2>
-      <p>
-        You just made my whole day.<br>
-        Now you officially owe me a hug, my love.
-      </p>
+<script>
+let no = document.getElementById("no");
+let yes = document.getElementById("yes");
+let fill = document.getElementById("fill");
+let status = document.getElementById("status");
+let result = document.getElementById("result");
 
-      <div class="heart-wrap">
-        <svg viewBox="0 0 300 200">
-          <!-- HEART -->
-          <path d="M150 180
-                   C 20 90, 70 10, 150 60
-                   C 230 10, 280 90, 150 180"
-                fill="#ff5c8a"/>
+let steps = [
+  "No 😤",
+  "Wait… maybe 👀",
+  "Okay… thinking 😳",
+  "Yeah this is a Yes 💗"
+];
 
-          <!-- ARROW -->
-          <g class="arrow">
-            <line x1="10" y1="120" x2="190" y2="90"
-                  stroke="#333" stroke-width="6"/>
-            <polygon points="190,90 175,82 178,98"
-                     fill="#333"/>
-          </g>
+let i = 0;
+let progress = 0;
+
+let timer = setInterval(() => {
+  progress += 25;
+  fill.style.width = progress + "%";
+  no.textContent = steps[Math.min(i, steps.length - 1)];
+  status.textContent = "The No is changing its mind…";
+  i++;
+  if (progress >= 100) clearInterval(timer);
+}, 1200);
+
+function celebrate() {
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+  yes.disabled = true;
+  no.disabled = true;
+}
+
+yes.onclick = celebrate;
+no.onclick = celebrate;
+</script>
+</body>
+</html>
